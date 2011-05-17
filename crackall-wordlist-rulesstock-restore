@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 ### looks for 'Sessions aborted' log entry, finds their session and runs their .rec
