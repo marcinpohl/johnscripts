@@ -9,31 +9,37 @@ POTS="$BASEDIR/pots"
 CDFS="$BASEDIR/CDFS"
 GREP="/bin/grep"
 AWK="/bin/awk"
+STAT="/usr/bin/stat"
+SYNC="/bin/sync"
 
-	#echo $DICTIONARIES
-	#echo $PASSWORDFILES
-
+declare -i count
+count=0
 
 for d in $DICTIONARIES
 do
     for p in $PASSWORDFILES
     do
-#	d="$BASEDIR/dicts/male-names"
-#	p="$BASEDIR/passwords/DES.passwd"
-#	echo "### DEBUG: " $p $d
-#	echo "### DEBUG: " $(basename $p) $(basename $d)
-	INPUTFILE="$SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d}).log"	
-	OUTPUTFILE="$CDFS/CDF-john-wordlist-$(basename ${p})-$(basename ${d}).csv"
+		FILENAME="john-wordlist$(basename ${p})-$(basename ${d})"
+		INPUTFILE="$SESSIONFILES/${FILENAME}.log"	
+		OUTPUTFILE="$CDFS/CDF-${FILENAME}.csv"
 
-	$AWK -F: 'BEGIN {OFS=","}; /+ Cracked/ {print 24*60*60*$1+60*60*$2+60*$3+substr($4,1,2),++count}' $INPUTFILE > $OUTPUTFILE 
-	
-### REMOVE EMPTY FILES	
-	if [ $(stat -c%s $OUTPUTFILE) -eq 0 ]
-	then
-		rm -f $OUTPUTFILE
-	fi
+#		echo $count
+		let count+=1
+#		echo "Creating CDF file for $(basename $INPUTFILE)"
+#		echo "...and writing it in  $(basename $OUTPUTFILE)"
+### convert day:hr:min:sec to just seconds so it can be on an easy timescale
+		$AWK -F: 'BEGIN {OFS=","}; /+ Cracked/ {print 24*60*60*$1+60*60*$2+60*$3+substr($4,1,2),++count}' $INPUTFILE > $OUTPUTFILE 
 
+### remove empty files	
+		if [ $(${STAT} -c%s $OUTPUTFILE) -eq 0 ]
+		then
+			rm -f $OUTPUTFILE
+			let count-=1
+		fi
     done
 done
+
+echo "$count useful logs analyzed."
+$SYNC; $SYNC
 
 # vim: noai:ts=4:sw=4

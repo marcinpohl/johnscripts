@@ -3,7 +3,7 @@
 BASEDIR="/data"
 DICTIONARIES="$BASEDIR/dicts/*"
 PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTR="$BASEDIR/jtr"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
 SESSIONFILES="$BASEDIR/sessions"
 POTS="$BASEDIR/pots"
 

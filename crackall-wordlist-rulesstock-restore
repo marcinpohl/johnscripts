@@ -1,25 +1,39 @@
-#!/bin/bash
+#!/bin/sh
 
 
-### single dictionary tester
-BASEDIR="/home/marcin/hashes/crackall.git"
-DICTIONARIES="$BASEDIR/dicts.bak/wikipedia"
+### looks for 'Sessions aborted' log entry, finds their session and runs their .rec
+BASEDIR="/data"
+DICTIONARIES="$BASEDIR/dicts/*"
 PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTR="$BASEDIR/jtr/john"
-SESSIONSDIR="$BASEDIR/sessions"
-POTSDIR="$BASEDIR/pots"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
+GREP="/bin/grep"
+COMM="/usr/bin/comm"
+SESSIONFILES="$BASEDIR/sessions"
+POTS="$BASEDIR/pots"
+COMPLETED="$SESSIONFILES/completed"
+ABORTED="$SESSIONFILES/aborted"
+NOTDONE="$SESSIONFILES/notdone"
+
+
+#echo $DICTIONARIES
+#echo $PASSWORDFILES
+
+OLDDIR=$(pwd)
+cd $SESSIONFILES
+$GREP -l completed *.log > $COMPLETED
+$GREP -l aborted *.log > $ABORTED
+$COMM -23 $ABORTED $COMPLETED > $NOTDONE
+cd $OLDDIR
 
 for d in $DICTIONARIES
 do
     for p in $PASSWORDFILES
     do
-
-		$JTR \
-		--wordlist=$d \
-		--session="$SESSIONSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d}.rec)" \
-		--pot="$POTSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d}.pot)" \
-		$p
-
+	   FILENAME="john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})"
+	   if [ $(grep -xc ${FILENAME}.log  $NOTDONE) -gt 0 ]
+	   then
+		  $JTR --restore=$SESSIONFILES/$FILENAME
+	   fi
     done
 done
 

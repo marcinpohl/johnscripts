@@ -1,30 +1,35 @@
-#!/bin/bash
-shopt -s extglob
-set +f
-#set -e
-#set -x
+#!/bin/sh
 
-BASEDIR="~/crackall.git"
+BASEDIR="/data"
 DICTIONARIES="$BASEDIR/dicts/*"
 PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTR="$BASEDIR/jtr/john"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
 SESSIONFILES="$BASEDIR/sessions"
 POTS="$BASEDIR/pots"
 
-echo $DICTIONARIES
-echo $PASSWORDFILES
+#echo $DICTIONARIES
+#echo $PASSWORDFILES
 
 for d in $DICTIONARIES
 do
-	echo $d
-	for p in $PASSWORDFILES
-	do
-		echo $p
-		INPUTFILE="wordlist-$(basename $p)-$(basename $d)"
-		echo $INPUTFILE
+    for p in $PASSWORDFILES
+    do
 
-		#$JTR --wordlist="${d}" \
-		jtr/john --wordlist="${d}" --pot="${POTS}"/"${INPUTFILE}" --session="${SESSIONFILES}"/"${INPUTFILE}" "${p}"
-	done
+#      JOB=$(grep -l "Session aborted" \
+#                      $SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d}).log )
+#       if [ -n "$JOB" ]
+#       then
+#            JOB=$(basename $JOB .log)
+#       $JTR --restore=$SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d})
+#       ##########################################^ this supposed to have a - but forgot on first run now must deal with it
+
+
+
+
+	    $JTR -w:${d} \
+			--pot=$POTS/john-wordlist-$(basename ${p})-$(basename ${d}) \
+			--session=$SESSIONFILES/john-wordlist-$(basename ${p})-$(basename ${d}) \
+			${p}
+    done
 done
-# vim: smartindent:ts=4:sw=4
+# vim: noai:ts=4:sw=4
