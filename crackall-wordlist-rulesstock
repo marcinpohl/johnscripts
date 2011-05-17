@@ -1,0 +1,27 @@
+#!/bin/bash
+shopt -s extglob
+set -e
+set -x
+
+BASEDIR="~/crackall.git"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
+SESSIONFILES="$BASEDIR/sessions"
+POTS="$BASEDIR/pots"
+
+for d in $DICTIONARIES
+do
+    for p in $PASSWORDFILES
+    do
+		INPUTFILE="rulesstock-wordlist-$(basename ${p})-$(basename ${d})"
+	    
+		$JTR --wordlist="${d}" \
+			--pot="${POTS}"/"${INPUTFILE}" \
+			--session="${SESSIONFILES}"/"${INPUTFILE}" \
+			--rules \
+			"${p}"
+    done
+done
+
+# vim: smartindent:ts=4:sw=4

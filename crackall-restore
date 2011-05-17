@@ -1,0 +1,29 @@
+#!/bin/sh
+
+BASEDIR="/data"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTR="$BASEDIR/jtr"
+SESSIONFILES="$BASEDIR/sessions"
+POTS="$BASEDIR/pots"
+
+#echo $DICTIONARIES
+#echo $PASSWORDFILES
+
+for d in $DICTIONARIES
+do
+	for p in $PASSWORDFILES
+	do
+
+	JOB=$(grep -l "Session aborted" \
+				$SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d}).log )
+	if [ -n "$JOB" ] 
+	then
+		JOB=$(basename $JOB .log)
+	$JTR --restore=$SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d})
+	##########################################^ this supposed to have a - but forgot on first run now must deal with it
+	fi
+#	echo $JOB
+	done
+done
+# vim: noai:ts=4:sw=4

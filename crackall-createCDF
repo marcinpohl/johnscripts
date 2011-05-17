@@ -1,0 +1,39 @@
+#!/bin/sh
+
+BASEDIR="/data"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
+SESSIONFILES="$BASEDIR/sessions"
+POTS="$BASEDIR/pots"
+CDFS="$BASEDIR/CDFS"
+GREP="/bin/grep"
+AWK="/bin/awk"
+
+	#echo $DICTIONARIES
+	#echo $PASSWORDFILES
+
+
+for d in $DICTIONARIES
+do
+    for p in $PASSWORDFILES
+    do
+#	d="$BASEDIR/dicts/male-names"
+#	p="$BASEDIR/passwords/DES.passwd"
+#	echo "### DEBUG: " $p $d
+#	echo "### DEBUG: " $(basename $p) $(basename $d)
+	INPUTFILE="$SESSIONFILES/john-wordlist$(basename ${p})-$(basename ${d}).log"	
+	OUTPUTFILE="$CDFS/CDF-john-wordlist-$(basename ${p})-$(basename ${d}).csv"
+
+	$AWK -F: 'BEGIN {OFS=","}; /+ Cracked/ {print 24*60*60*$1+60*60*$2+60*$3+substr($4,1,2),++count}' $INPUTFILE > $OUTPUTFILE 
+	
+### REMOVE EMPTY FILES	
+	if [ $(stat -c%s $OUTPUTFILE) -eq 0 ]
+	then
+		rm -f $OUTPUTFILE
+	fi
+
+    done
+done
+
+# vim: noai:ts=4:sw=4

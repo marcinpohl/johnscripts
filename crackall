@@ -1,0 +1,14 @@
+#!/bin/sh
+
+DICTIONARIES=/data/dicts/*
+PASSWORDFILES=/data/*.passwd
+JTR=/data/john-1.7.6-jumbo-12/run/john
+
+#echo $DICTIONARIES
+#echo $PASSWORDFILES
+
+#for d in DICTIONARIES
+for p in $PASSWORDFILES
+do
+	$JTR -pot=john-$(basename ${p}).pot ${p}
+done

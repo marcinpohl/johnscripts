@@ -1,0 +1,26 @@
+#!/bin/sh
+
+
+### single dictionary tester
+BASEDIR="/home/marcin/hashes/crackall.git"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTRBIN="$BASEDIR/jtr/john"
+SESSIONSDIR="$BASEDIR/sessions"
+POTSDIR="$BASEDIR/pots"
+
+for d in $DICTIONARIES
+do
+    for p in $PASSWORDFILES
+    do
+		$JTRBIN \
+		--wordlist=$d \
+		--session="$SESSIONSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})" \
+		--pot="$POTSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})" \
+		--rules \
+		$p &
+
+    done
+done
+
+# vim: noai:ts=4:sw=4

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+BASEDIR="/data"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
+SESSIONFILES="$BASEDIR/sessions/"
+POTS="$BASEDIR/pots/"
+
+
+#echo $DICTIONARIES
+#echo $PASSWORDFILES
+
+#for d in DICTIONARIES
+for p in $PASSWORDFILES
+do
+	$JTR \
+		--pot=$POTS/john-$(basename ${p})-single \
+		--session=$SESSIONFILES/john-$(basename ${p})-single ${p}
+done
+
+# vim: noai:ts=4:sw=4

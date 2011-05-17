@@ -1,0 +1,30 @@
+#!/bin/bash
+shopt -s extglob
+set +f
+#set -e
+#set -x
+
+BASEDIR="~/crackall.git"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTR="$BASEDIR/jtr/john"
+SESSIONFILES="$BASEDIR/sessions"
+POTS="$BASEDIR/pots"
+
+echo $DICTIONARIES
+echo $PASSWORDFILES
+
+for d in $DICTIONARIES
+do
+	echo $d
+	for p in $PASSWORDFILES
+	do
+		echo $p
+		INPUTFILE="wordlist-$(basename $p)-$(basename $d)"
+		echo $INPUTFILE
+
+		#$JTR --wordlist="${d}" \
+		jtr/john --wordlist="${d}" --pot="${POTS}"/"${INPUTFILE}" --session="${SESSIONFILES}"/"${INPUTFILE}" "${p}"
+	done
+done
+# vim: smartindent:ts=4:sw=4
