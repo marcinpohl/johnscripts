@@ -1,45 +1,47 @@
 #!/bin/sh
+### single dictionary tester
+BASEDIR="/data"
+DICTIONARIES="$BASEDIR/dicts/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTRBIN="$BASEDIR/john-1.7.7-jumbo-1/run/john"
+SESSIONSDIR="$BASEDIR/sessions"
+POTSDIR="$BASEDIR/pots"
+USER="root"
+
 function johncount () { 	
 	declare -i count
 	declare -a pids
-	pids=$(pgrep -u marcin john)
+	pids=$(pgrep -u $USER john)
 	count=${#pids[*]}
 	echo $count
 	return $count
 }
 
-### single dictionary tester
-BASEDIR="/home/marcin/hashes/crackall.git"
-DICTIONARIES="$BASEDIR/dicts/*"
-PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTRBIN="$BASEDIR/jtr/john"
-SESSIONSDIR="$BASEDIR/sessions"
-POTSDIR="$BASEDIR/pots"
 
 declare -i NUMCPUS
 NUMCPUS=4
-
-for d in $DICTIONARIES
-do
-	for p in $PASSWORDFILES
-		do
-		until [ $(pgrep -u marcin john | wc -l ) -gt $NUMCPUS ] ; do
-			echo "### 5secs BEFORE new JtR"
-			johncount
-			sleep 5
-		
-			$JTRBIN \
-				--session="$SESSIONSDIR/john-singledict-$(basename ${p})-$(basename ${d})" \
-				--pot="$POTSDIR/john-singledict-$(basename ${p})-$(basename ${d})" \
-				--wordlist=$d \
-				--rules \
-				$p &
-			sleep 5
-			
-			echo "### 5secs AFTER new JtR"
-			johncount
-		done	# until
-    done	#for passwordfiles
-done	#for dictionaries
+until [ johncount -gt $NUMCPUS ] ; do
+    for d in $DICTIONARIES
+    do
+	    for p in $PASSWORDFILES
+		    do
+			    FILENAME="john-singledict-$(basename ${p})-$(basename ${d})"
+			    echo "### 5secs BEFORE new JtR"
+			    johncount
+			    sleep 5
+		    
+			    $JTRBIN \
+				    --session="${SESSIONSDIR}/${FILENAME})" \
+				    --pot="${POTSDIR}/${FILENAME}" \
+				    --wordlist=$d \
+				    --rules \
+				    $p &
+			    sleep 5
+			    
+			    echo "### 5secs AFTER new JtR"
+			    johncount
+		done	#for passwordfiles
+    done	#for dictionaries
+done	#until
 
 # vim: smartindent:ts=2:sw=2

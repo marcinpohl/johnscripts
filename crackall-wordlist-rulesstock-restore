@@ -18,12 +18,14 @@ NOTDONE="$SESSIONFILES/notdone"
 #echo $DICTIONARIES
 #echo $PASSWORDFILES
 
-OLDDIR=$(pwd)
+#OLDDIR=$(pwd)
+pushd .
 cd $SESSIONFILES
 $GREP -l completed *.log > $COMPLETED
 $GREP -l aborted *.log > $ABORTED
 $COMM -23 $ABORTED $COMPLETED > $NOTDONE
-cd $OLDDIR
+popd
+#cd $OLDDIR
 
 for d in $DICTIONARIES
 do
