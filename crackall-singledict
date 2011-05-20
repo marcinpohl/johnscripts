@@ -1,5 +1,12 @@
 #!/bin/sh
-
+function johncount () { 	
+	declare -i count
+	declare -a pids
+	pids=$(pgrep -u marcin john)
+	count=${#pids[*]}
+	echo $count
+	return $count
+}
 
 ### single dictionary tester
 BASEDIR="/home/marcin/hashes/crackall.git"
@@ -9,18 +16,30 @@ JTRBIN="$BASEDIR/jtr/john"
 SESSIONSDIR="$BASEDIR/sessions"
 POTSDIR="$BASEDIR/pots"
 
+declare -i NUMCPUS
+NUMCPUS=4
+
 for d in $DICTIONARIES
 do
-    for p in $PASSWORDFILES
-    do
-		$JTRBIN \
-		--wordlist=$d \
-		--session="$SESSIONSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})" \
-		--pot="$POTSDIR/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})" \
-		--rules \
-		$p &
+	for p in $PASSWORDFILES
+		do
+		until [ $(pgrep -u marcin john | wc -l ) -gt $NUMCPUS ] ; do
+			echo "### 5secs BEFORE new JtR"
+			johncount
+			sleep 5
+		
+			$JTRBIN \
+				--session="$SESSIONSDIR/john-singledict-$(basename ${p})-$(basename ${d})" \
+				--pot="$POTSDIR/john-singledict-$(basename ${p})-$(basename ${d})" \
+				--wordlist=$d \
+				--rules \
+				$p &
+			sleep 5
+			
+			echo "### 5secs AFTER new JtR"
+			johncount
+		done	# until
+    done	#for passwordfiles
+done	#for dictionaries
 
-    done
-done
-
-# vim: noai:ts=4:sw=4
+# vim: smartindent:ts=2:sw=2
