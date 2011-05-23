@@ -26,7 +26,6 @@ do
 		until [ $(pgrep -u marcin john | wc -l ) -gt $NUMCPUS ] ; do
 			echo "### 5secs BEFORE new JtR"
 			johncount
-			sleep 5
 		
 			$JTRBIN \
 				--session="$SESSIONSDIR/john-singledict-$(basename ${p})-$(basename ${d})" \
@@ -34,7 +33,6 @@ do
 				--wordlist=$d \
 				--rules \
 				$p &
-			sleep 5
 			
 			echo "### 5secs AFTER new JtR"
 			johncount
