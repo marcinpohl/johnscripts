@@ -1,24 +1,25 @@
 #!/bin/sh
 
-BASEDIR="/data"
-DICTIONARIES="$BASEDIR/dicts/*"
-PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
-SESSIONFILES="$BASEDIR/sessions"
-POTS="$BASEDIR/pots"
 
-#echo $DICTIONARIES
-#echo $PASSWORDFILES
+### single dictionary tester
+BASEDIR="/home/marcin/hashes/crackall.git"
+DICTIONARIES="$BASEDIR/dicts3/Dicts/Quick_Lists/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
+JTRBIN="$BASEDIR/jtr/john"
+SESSIONSDIR="$BASEDIR/sessions"
+POTSDIR="$BASEDIR/pots"
 
 for d in $DICTIONARIES
 do
     for p in $PASSWORDFILES
     do
-	    $JTR -w:${d} \
-		--rules \
-		--pot=$POTS/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d}) \
-		--session=$SESSIONFILES/john-wordlist-rulesstock-$(basename ${p})-$(basename ${d}) \
-		${p}
+		FILENAME="john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})"
+		$JTRBIN \
+			--wordlist=$d \
+			--session="$SESSIONSDIR/$FILENAME" \
+			--pot="$POTSDIR/$FILENAME" \
+			--rules \
+			$p 
     done
 done
 
