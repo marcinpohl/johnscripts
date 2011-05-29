@@ -1,19 +1,9 @@
 #!/bin/bash
-
+set -e 
+set -x
 
 ### looks for 'Sessions aborted' log entry, finds their session and runs their .rec
-BASEDIR="/data"
-DICTIONARIES="$BASEDIR/dicts/*"
-PASSWORDFILES="$BASEDIR/passwords/*.passwd"
-JTR="$BASEDIR/john-1.7.6-jumbo-12/run/john"
-GREP="/bin/grep"
-COMM="/usr/bin/comm"
-SESSIONFILES="$BASEDIR/sessions"
-POTS="$BASEDIR/pots"
-COMPLETED="$SESSIONFILES/completed"
-ABORTED="$SESSIONFILES/aborted"
-NOTDONE="$SESSIONFILES/notdone"
-
+source ./crackall.inc
 
 #echo $DICTIONARIES
 #echo $PASSWORDFILES
@@ -25,6 +15,7 @@ $GREP -l aborted *.log > $ABORTED
 $COMM -23 $ABORTED $COMPLETED > $NOTDONE
 cd $OLDDIR
 
+### TODO:  gotta made DICTS and PASSWDS work differently so the restore job can access what it needs
 for d in $DICTIONARIES
 do
     for p in $PASSWORDFILES
@@ -36,5 +27,8 @@ do
 	   fi
     done
 done
+
+set +x
+set +e
 
 # vim: noai:ts=4:sw=4
