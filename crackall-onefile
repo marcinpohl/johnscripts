@@ -5,7 +5,8 @@
 BASEDIR="/home/marcin/hashes/crackall.git"
 #DICTIONARIES="$BASEDIR/dicts/Really_Quick/*"
 DICTIONARIES="$BASEDIR/dicts/Quick_Lists/*"
-PASSWORDFILES="$BASEDIR/passwords/DES*.passwd"
+#DICTIONARIES="$BASEDIR/dicts/wordlists/*"
+PASSWORDFILES="$BASEDIR/passwords/SSHA*.passwd"
 JTRBIN="$BASEDIR/jtr/john"
 SESSIONSDIR="$BASEDIR/sessions"
 POTSDIR="$BASEDIR/pots"
@@ -20,6 +21,7 @@ do
 			--session="$SESSIONSDIR/$FILENAME" \
 			--pot="$POTSDIR/$FILENAME" \
 			--rules \
+			--format=ssha \
 			$p 
     done
 done

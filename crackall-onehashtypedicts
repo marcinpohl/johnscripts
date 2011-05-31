@@ -4,24 +4,22 @@
 ### single hashtype tester
 BASEDIR="/home/marcin/hashes/crackall.git"
 #DICTIONARIES="$BASEDIR/dicts/Really_Quick/*"
-DICTIONARIES="$BASEDIR/dicts/Quick_Lists/*"
-PASSWORDFILES="$BASEDIR/passwords/DES*.passwd"
+#DICTIONARIES="$BASEDIR/dicts/Quick_Lists/*"
+#DICTIONARIES="$BASEDIR/dicts/wordlists/*"
+PASSWORDFILES="$BASEDIR/passwords/HYPELIST-Uncracked.txt"
 JTRBIN="$BASEDIR/jtr/john"
 SESSIONSDIR="$BASEDIR/sessions"
 POTSDIR="$BASEDIR/pots"
+FORMATS="lm nt ssha md5"
 
-for d in $DICTIONARIES
-do
-    for p in $PASSWORDFILES
+    for f in $FORMATS
     do
-		FILENAME="john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})"
+		FILENAME="john-onefile-$(basename ${f})"
 		$JTRBIN \
-			--wordlist=$d \
 			--session="$SESSIONSDIR/$FILENAME" \
 			--pot="$POTSDIR/$FILENAME" \
-			--rules \
+			--format=${f} \
 			$p 
     done
-done
 
 # vim: noai:ts=4:sw=4
