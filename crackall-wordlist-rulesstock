@@ -1,11 +1,14 @@
 #!/bin/sh
-
+set -x
+set -e
 
 ### single hashtype tester
 BASEDIR="/home/marcin/hashes/crackall.git"
 #DICTIONARIES="$BASEDIR/dicts/Really_Quick/*"
-DICTIONARIES="$BASEDIR/dicts/Quick_Lists/*"
-PASSWORDFILES="$BASEDIR/passwords/DES*.passwd"
+#DICTIONARIES="$BASEDIR/dicts/Quick_Lists/*"
+#DICTIONARIES="$BASEDIR/dicts/Large_Lists/*"
+DICTIONARIES="$BASEDIR/dicts/Alt_Lang/*"
+PASSWORDFILES="$BASEDIR/passwords/*.passwd"
 JTRBIN="$BASEDIR/jtr/john"
 SESSIONSDIR="$BASEDIR/sessions"
 POTSDIR="$BASEDIR/pots"
@@ -14,13 +17,15 @@ for d in $DICTIONARIES
 do
     for p in $PASSWORDFILES
     do
-		FILENAME="john-wordlist-rulesstock-$(basename ${p})-$(basename ${d})"
-		$JTRBIN \
-			--wordlist=$d \
-			--session="$SESSIONSDIR/$FILENAME" \
-			--pot="$POTSDIR/$FILENAME" \
-			--rules \
-			$p 
+		if [ -f ${d} ] 
+		then
+			FILENAME="john-wordlist-altlang-$(basename ${p})-$(basename ${d})"
+			$JTRBIN \
+				--wordlist=$d \
+				--session="$SESSIONSDIR/$FILENAME" \
+				--pot="$POTSDIR/$FILENAME" \
+				$p 
+		fi
     done
 done
 
