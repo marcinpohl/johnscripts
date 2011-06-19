@@ -1,14 +1,17 @@
 #!/bin/bash
+set +x
 
 find dicts/Really_Quick -type f -print0 > list1
 find dicts/Quick_Lists -type f -print0 > list2
 find dicts/wordlists -type f -print0 > list3
-find dicts/Alt_Lists -type f -print0 > list4
-find dicts/Large_lists -maxdepth 1 -type f -print0 > list5
-find dicts/Large_lists -type f -print0 > list6
+find dicts/Alt_Lang -type f -print0 > list4
+find dicts/Large_Lists -maxdepth 1 -type f -print0 > list5
+find dicts/Large_Lists -type f -print0 > list6
 
-cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie4.\$\$  --pot=pots/pastie4.pot  --format=raw-md5   passwords/pastie4 
-cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie6.\$\$  --pot=pots/pastie6.pot  --format=raw-md5   passwords/pastie6 
-cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie8.\$\$  --pot=pots/pastie8.pot  --format=raw-md5   passwords/pastie8 
-cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie9.\$\$  --pot=pots/pastie9.pot  --format=raw-md5   passwords/pastie9 
+#cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie4.\$\$  --pot=pots/pastie4.pot  --format=raw-md5   passwords/pastie4 
+#cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie6.\$\$  --pot=pots/pastie6.pot  --format=raw-md5   passwords/pastie6 
+#cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie8.\$\$  --pot=pots/pastie8.pot  --format=raw-md5   passwords/pastie8 
+#cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie9.\$\$  --pot=pots/pastie9.pot  --format=raw-md5   passwords/pastie9 
+cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie7.\$\$  --pot=pots/pastie7.pot  --format=raw-md5   passwords/pastie7 
+cat list{1,2,3,4,5} | parallel -v -0 john-1.7.7-jumbo-6/run/john -w:{} --rules  --session=sessions/pastie10.\$\$  --pot=pots/pastie10.pot  --format=raw-md5   passwords/pastie10
 
