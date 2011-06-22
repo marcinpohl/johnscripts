@@ -2,43 +2,20 @@
 set -x
 set +e
 declare -r BASEDIR=~marcin/hashes/crackall.git
-declare -r DICTS=$BASEDIR/dicts
+declare -r DICTS=/mnt/storage/dicts
 declare -r JTR=~/john
 declare -r PASSWORDDIR=$BASEDIR/passwords
 declare -r SESSIONSDIR=$BASEDIR/sessions
 declare -r POTSDIR=$BASEDIR/pots
 
 function makedictlists() {
-find $DICTS/Really_Quick -type f -print0 > $DICTS/list1
-find $DICTS/Quick_Lists -type f -print0 > $DICTS/list2
-find $DICTS/wordlists -type f -print0 > $DICTS/list3
-find $DICTS/Alt_Lang -type f -print0 > $DICTS/list4
-find $DICTS/Large_Lists -maxdepth 1 -type f -print0 > $DICTS/list5
-find $DICTS/Large_Lists -type f -print0 > $DICTS/list6
-}
-
-function alldicts_rulessingle() {
-local PASSWD=${@:3}
-local DICT=$2
-local FORMAT=$1
-
-cat $DICTS/list{1,2,3,4,5} | parallel -v -0 $JTR -w:{} --rules:single --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
-}
-
-function alldicts_rulesstock() {
-local PASSWD=${@:3}
-local DICT=$2
-local FORMAT=$1
-
-cat $DICTS/list{1,2,3,4,5} | parallel -v -0 $JTR -w:{} --rules --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
-}
-
-function alldicts_rulesnone() {
-local PASSWD=${@:3}
-local DICT=$2
-local FORMAT=$1
-
-cat $DICTS/list{1,2,3,4,5} | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+#find $DICTS/Really_Quick -type f -print0 > $DICTS/list1
+#find $DICTS/Quick_Lists -type f -print0 > $DICTS/list2
+#find $DICTS/wordlists -type f -print0 > $DICTS/list3
+#find $DICTS/Alt_Lang -type f -print0 > $DICTS/list4
+#find $DICTS/Large_Lists -maxdepth 1 -type f -print0 > $DICTS/list5
+#find $DICTS/Large_Lists -type f -print0 > $DICTS/list6
+find $DICTS -type f -print0 > $DICTS/list
 }
 
 function onedict_singlerules {
@@ -48,9 +25,6 @@ local FORMAT=$1
 
 $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/${PASSWD}.\$\$  --pot=$POTSDIR/${PASSWD}.pot  --format=$FORMAT   $PASSWORDDIR/$PASSWD
 }
-
-
-
 
 function onedict_rulessingle_multipass() {
 declare -a PASSWD=${@:3} 
@@ -65,14 +39,35 @@ done
 $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --pot=$POTSDIR/${PASSWDID}.pot  --format=$FORMAT  ${PASSLIST[@]}
 }
 
+function alldicts_rulessingle() {
+local PASSWD=${@:2}
+local FORMAT=$1
+
+makedictlists #initialize the dictionary lists
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules:single --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+}
+
+function alldicts_rulesstock() {
+local PASSWD=${@:2}
+local FORMAT=$1
+
+makedictlists #initialize the dictionary lists
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+}
+
+function alldicts_rulesnone() {
+local PASSWD=${@:2}
+local FORMAT=$1
+
+makedictlists #initialize the dictionary lists
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+}
+
 ### TESTED
-#onedict_singlerules raw-md5 Really_Quick/marcin.dic pastie6.passwd
+#onedict_singlerules des Really_Quick/lulz.dic HYPELIST-Uncracked.txt
 #onedict_rulessingle_multipass raw-md5 Really_Quick/marcin.dic ~marcin/hashes/crackall.git/passwords/pastie{4,7,8,9,10}
-onedict_rulessingle_multipass raw-md5 Really_Quick/lulz.dic pastie{4,7,8,9,10} HYPELIST-Uncracked.txt
-
-
-
-
-#john-1.7.7-jumbo-6/run/john -w:dicts/Really_Quick/lulz.bigdic --rules:single  --session=sessions/pastielulz.\$\$  --pot=pots/pastie4.pot  --format=raw-md5   passwords/pastie{4,6,7,8,9,10} 
-#john-1.7.7-jumbo-6/run/john -w:dicts/Really_Quick/lulz.bigdic --rules:single  --session=sessions/pastie7.\$\$  --pot=pots/pastie7.pot  --format=raw-md5   passwords/pastie7 
-
+#onedict_rulessingle_multipass raw-md5 Really_Quick/lulz.dic pastie{4,7,8,9,10} HYPELIST-Uncracked.txt
+#alldicts_rulesnone raw-md5 HYPELIST-Uncracked.txt
+#alldicts_rulesstock raw-md5 HYPELIST-Uncracked.txt
+alldicts_rulessingle md5 HYPELIST-Uncracked.txt
+#alldicts_rulesnone mysql HYPELIST-Uncracked.txt
