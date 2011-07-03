@@ -1,0 +1,24 @@
+Warning: only loading hashes of type "des", but also saw type "oracle"
+Use the "--format=oracle" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "mysql"
+Use the "--format=mysql" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "mysql-fast"
+Use the "--format=mysql-fast" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "pix-md5"
+Use the "--format=pix-md5" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "md5"
+Use the "--format=md5" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "lm"
+Use the "--format=lm" option to force loading hashes of that type instead
+Using raw-md5 mode, by linking to md5_gen(0) functions
+Warning: only loading hashes of type "des", but also saw type "raw-md5"
+Use the "--format=raw-md5" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "raw-md5-unicode"
+Use the "--format=raw-md5-unicode" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "raw-md4"
+Use the "--format=raw-md4" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "lotus5"
+Use the "--format=lotus5" option to force loading hashes of that type instead
+Warning: only loading hashes of type "des", but also saw type "po"
+Use the "--format=po" option to force loading hashes of that type instead
+

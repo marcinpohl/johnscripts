@@ -1,0 +1,296 @@
+Benchmarking: Traditional DES [128/128 BS SSE2-16]... DONE
+Many salts:	1565K c/s real, 1580K c/s virtual
+Only one salt:	1588K c/s real, 1588K c/s virtual
+
+Benchmarking: BSDI DES (x725) [128/128 BS SSE2-16]... DONE
+Many salts:	54528 c/s real, 54528 c/s virtual
+Only one salt:	52974 c/s real, 52974 c/s virtual
+
+Benchmarking: FreeBSD MD5 [8x]... DONE
+Raw:	21856 c/s real, 21856 c/s virtual
+
+Benchmarking: OpenBSD Blowfish (x32) [32/64 X2]... DONE
+Raw:	672 c/s real, 672 c/s virtual
+
+Benchmarking: Kerberos AFS DES [48/64 4K]... DONE
+Short:	328960 c/s real, 328960 c/s virtual
+Long:	980480 c/s real, 980480 c/s virtual
+
+Benchmarking: LM DES [128/128 BS SSE2-16]... DONE
+Raw:	10672K c/s real, 10672K c/s virtual
+
+Benchmarking: NT MD4 [128/128 X2 SSE2-16]... DONE
+Raw:	25797K c/s real, 25797K c/s virtual
+
+Benchmarking: Mac OS X 10.4+ salted SHA-1 [32/64]... DONE
+Many salts:	3566K c/s real, 3566K c/s virtual
+Only one salt:	3158K c/s real, 3158K c/s virtual
+
+Benchmarking: M$ Cache Hash [Generic 1x]... DONE
+Many salts:	13429K c/s real, 13429K c/s virtual
+Only one salt:	5457K c/s real, 5457K c/s virtual
+
+Benchmarking: M$ Cache Hash 2 [Generic 1x]... DONE
+Raw:	95.0 c/s real, 95.0 c/s virtual
+
+Benchmarking: HMAC MD5 [hmac-md5]... DONE
+Raw:	1238K c/s real, 1238K c/s virtual
+
+Benchmarking: Post.Office MD5 [STD]... DONE
+Many salts:	2846K c/s real, 2846K c/s virtual
+Only one salt:	2712K c/s real, 2712K c/s virtual
+
+Benchmarking: Raw MD5 [gen]... Using raw-md5 mode, by linking to md5_gen(0) functions DONE
+Raw:	14750K c/s real, 14750K c/s virtual
+
+Benchmarking: Raw MD5 of Unicode plaintext [raw-md5-unicode 64x1]... DONE
+Raw:	5292K c/s real, 5292K c/s virtual
+
+Benchmarking: PHPass MD5 [phpass-md5]... Using phpass mode, by linking to md5_gen(17) functions DONE
+Raw:	11824 c/s real, 11824 c/s virtual
+
+Benchmarking: IPB2 MD5 [Invision Power Board 2.x salted MD5]... DONE
+Many salts:	2451K c/s real, 2451K c/s virtual
+Only one salt:	1540K c/s real, 1540K c/s virtual
+
+Benchmarking: Raw SHA-1(8x) [SHA-1]... DONE
+Raw:	8197K c/s real, 8197K c/s virtual
+
+Benchmarking: Generic salted SHA-1 [32/64]... DONE
+Many salts:	3380K c/s real, 3380K c/s virtual
+Only one salt:	3339K c/s real, 3339K c/s virtual
+
+Benchmarking: Raw MD4 [32/64]... DONE
+Raw:	5201K c/s real, 5201K c/s virtual
+
+Benchmarking: Generic salted MD4 [32/64]... DONE
+Many salts:	5240K c/s real, 5240K c/s virtual
+Only one salt:	5076K c/s real, 5076K c/s virtual
+
+Benchmarking: Kerberos v4 TGT [krb4 DES]... DONE
+Raw:	2111K c/s real, 2111K c/s virtual
+
+Benchmarking: Kerberos v5 TGT [krb5 3DES (des3-cbc-sha1)]... DONE
+Raw:	42223 c/s real, 42223 c/s virtual
+
+Benchmarking: MS Kerberos 5 AS-REQ Pre-Auth [mskrb5]... DONE
+Many salts:	581344 c/s real, 581344 c/s virtual
+Only one salt:	348096 c/s real, 348096 c/s virtual
+
+Benchmarking: Netscape LDAP SHA [SHA-1]... DONE
+Raw:	3375K c/s real, 3375K c/s virtual
+
+Benchmarking: Netscape LDAP SSHA [salted SHA-1]... DONE
+Many salts:	3493K c/s real, 3493K c/s virtual
+Only one salt:	3042K c/s real, 3042K c/s virtual
+
+Benchmarking: OpenLDAP SSHA [salted SHA-1]... DONE
+Many salts:	3499K c/s real, 3499K c/s virtual
+Only one salt:	3060K c/s real, 3060K c/s virtual
+
+Benchmarking: Salted SHA(8x) [SHA-1]... DONE
+Many salts:	9822K c/s real, 9822K c/s virtual
+Only one salt:	7451K c/s real, 7451K c/s virtual
+
+Benchmarking: Eggdrop [blowfish]... DONE
+Raw:	20246 c/s real, 20246 c/s virtual
+
+Benchmarking: Oracle [oracle]... DONE
+Raw:	602898 c/s real, 602898 c/s virtual
+
+Benchmarking: Oracle 11g [oracle11]... DONE
+Many salts:	3539K c/s real, 3539K c/s virtual
+Only one salt:	3073K c/s real, 3073K c/s virtual
+
+Benchmarking: MYSQL [mysql]... DONE
+Raw:	2813K c/s real, 2813K c/s virtual
+
+Benchmarking: MySQL 4.1 double-SHA-1 [mysql-sha1]... DONE
+Raw:	1833K c/s real, 1833K c/s virtual
+
+Benchmarking: Lotus5 [Lotus v5 Proprietary]... DONE
+Raw:	178956 c/s real, 178956 c/s virtual
+
+Benchmarking: More Secure Internet Password [RSA MD defined by BSAFE 1.x - Lotus v6]... DONE
+Many salts:	111296 c/s real, 111296 c/s virtual
+Only one salt:	65958 c/s real, 65958 c/s virtual
+
+Benchmarking: LM C/R DES [netlm]... DONE
+Many salts:	2105K c/s real, 2105K c/s virtual
+Only one salt:	711936 c/s real, 719127 c/s virtual
+
+Benchmarking: NTLMv1 C/R MD4 DES [ESS MD5] [netntlm]... DONE
+Many salts:	2119K c/s real, 2119K c/s virtual
+Only one salt:	1551K c/s real, 1551K c/s virtual
+
+Benchmarking: LMv2 C/R MD4 HMAC-MD5 [netlmv2]... DONE
+Many salts:	711680 c/s real, 711680 c/s virtual
+Only one salt:	572160 c/s real, 572160 c/s virtual
+
+Benchmarking: NTLMv2 C/R MD4 HMAC-MD5 [netntlmv2]... DONE
+Many salts:	615168 c/s real, 615168 c/s virtual
+Only one salt:	509952 c/s real, 509952 c/s virtual
+
+Benchmarking: HalfLM C/R DES [nethalflm]... DONE
+Many salts:	2108K c/s real, 2108K c/s virtual
+Only one salt:	1060K c/s real, 1060K c/s virtual
+
+Benchmarking: MediaWiki MD5s [MD5($s.'-'.md5($p)) MD5]... Using mediawiki mode, by linking to md5_gen(9) functions DONE
+Many salts:	10838K c/s real, 10838K c/s virtual
+Only one salt:	5449K c/s real, 5449K c/s virtual
+
+Benchmarking: MSCHAPv2 C/R MD4 DES [mschapv2]... DONE
+Many salts:	2114K c/s real, 2114K c/s virtual
+Only one salt:	1549K c/s real, 1549K c/s virtual
+
+Benchmarking: MS-SQL [mssql]... DONE
+Many salts:	3726K c/s real, 3726K c/s virtual
+Only one salt:	3237K c/s real, 3237K c/s virtual
+
+Benchmarking: MS-SQL05 [ms-sql05]... DONE
+Many salts:	3724K c/s real, 3724K c/s virtual
+Only one salt:	3082K c/s real, 3082K c/s virtual
+
+Benchmarking: EPiServer SID Hashes [SHA-1]... DONE
+Many salts:	3599K c/s real, 3599K c/s virtual
+Only one salt:	3445K c/s real, 3445K c/s virtual
+
+Benchmarking: PHPS MD5 [MD5(MD5($pass).$salt) MD5]... Using phps mode, by linking to md5_gen(6) functions DONE
+Many salts:	18567K c/s real, 18567K c/s virtual
+Only one salt:	5385K c/s real, 5385K c/s virtual
+
+Benchmarking: MYSQL_fast [mysql-fast]... DONE
+Raw:	17119K c/s real, 17119K c/s virtual
+
+Benchmarking: PIX MD5 [pix-md5]... DONE
+Raw:	2821K c/s real, 2821K c/s virtual
+
+Benchmarking: SAP CODVN G (PASSCODE) [sapg]... DONE
+Many salts:	1131K c/s real, 1131K c/s virtual
+Only one salt:	1039K c/s real, 1039K c/s virtual
+
+Benchmarking: SAP BCODE [sapb]... DONE
+Many salts:	1395K c/s real, 1395K c/s virtual
+Only one salt:	1170K c/s real, 1170K c/s virtual
+
+Benchmarking: Netscreen MD5 [NS MD5]... DONE
+Raw:	3746K c/s real, 3746K c/s virtual
+
+Benchmarking: HTTP Digest access authentication [HDAA-MD5]... DONE
+Many salts:	1242K c/s real, 1242K c/s virtual
+Only one salt:	1216K c/s real, 1216K c/s virtual
+
+Benchmarking:  md5_gen(0): md5($p)  (raw-md5)  [SSE2 16x4x2 (intr)]... DONE
+Raw:	14689K c/s real, 14689K c/s virtual
+
+Benchmarking:  md5_gen(1): md5($p.$s)  (joomla)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	12869K c/s real, 12869K c/s virtual
+Only one salt:	7759K c/s real, 7759K c/s virtual
+
+Benchmarking:  md5_gen(2): md5(md5($p))  (e107)  [SSE2 16x4x2 (intr)]... DONE
+Raw:	8123K c/s real, 8123K c/s virtual
+
+Benchmarking:  md5_gen(3): md5(md5(md5($p)))  [SSE2 16x4x2 (intr)]... DONE
+Raw:	5582K c/s real, 5582K c/s virtual
+
+Benchmarking:  md5_gen(4): md5($s.$p)  (OSC)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	13876K c/s real, 13876K c/s virtual
+Only one salt:	7981K c/s real, 7981K c/s virtual
+
+Benchmarking:  md5_gen(5): md5($s.$p.$s)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	11818K c/s real, 11818K c/s virtual
+Only one salt:	7102K c/s real, 7102K c/s virtual
+
+Benchmarking:  md5_gen(6): md5(md5($p).$s)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	17968K c/s real, 17968K c/s virtual
+Only one salt:	5452K c/s real, 5452K c/s virtual
+
+Benchmarking:  md5_gen(8): md5(md5($s).$p)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	13195K c/s real, 13195K c/s virtual
+Only one salt:	7876K c/s real, 7876K c/s virtual
+
+Benchmarking:  md5_gen(9): md5($s.md5($p))  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	12847K c/s real, 12847K c/s virtual
+Only one salt:	5326K c/s real, 5326K c/s virtual
+
+Benchmarking:  md5_gen(10): md5($s.md5($s.$p))  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	6675K c/s real, 6675K c/s virtual
+Only one salt:	4963K c/s real, 4963K c/s virtual
+
+Benchmarking:  md5_gen(11): md5($s.md5($p.$s))  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	6780K c/s real, 6780K c/s virtual
+Only one salt:	5019K c/s real, 5019K c/s virtual
+
+Benchmarking:  md5_gen(14): md5($s.md5($p).$s)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	10994K c/s real, 10994K c/s virtual
+Only one salt:	4987K c/s real, 4987K c/s virtual
+
+Benchmarking:  md5_gen(15): md5($u.md5($p).$s)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	7790K c/s real, 7790K c/s virtual
+Only one salt:	4194K c/s real, 4194K c/s virtual
+
+Benchmarking:  md5_gen(16): md5(md5(md5($p).$s).$s2)  [SSE2 16x4x2 (intr)]... DONE
+Many salts:	5033K c/s real, 5033K c/s virtual
+Only one salt:	3050K c/s real, 3050K c/s virtual
+
+Benchmarking:  md5_gen(17): phpass ($P$ or $H$)  [SSE2 2x4x2 (intr)]... DONE
+Raw:	11840 c/s real, 11840 c/s virtual
+
+Benchmarking:  md5_gen(18): md5($s.Y.$p.0xF7.$s) (Post.Office MD5)  [64x2 (MD5_Body)]... DONE
+Many salts:	2864K c/s real, 2864K c/s virtual
+Only one salt:	2504K c/s real, 2504K c/s virtual
+
+Benchmarking:  md5_gen(19): Cisco PIX (MD5) [SSE2 16x4x2 (intr)]... DONE
+Raw:	8715K c/s real, 8715K c/s virtual
+
+Benchmarking:  md5_gen(20): Cisco PIX (MD5 salted) [SSE2 16x4x2 (intr)]... DONE
+Many salts:	12445K c/s real, 12445K c/s virtual
+Only one salt:	7419K c/s real, 7419K c/s virtual
+
+Benchmarking:  md5_gen(27): FreeBSD MD5 [SSE2 4x2 (intr)]... DONE
+Raw:	19952 c/s real, 19952 c/s virtual
+
+Benchmarking:  md5_gen(28): Apache MD5 [SSE2 4x2 (intr)]... DONE
+Raw:	20234 c/s real, 20032 c/s virtual
+
+Benchmarking: md5_gen(1001) md5(md5(md5(md5($p)))) [SSE2 16x4x2 (intr)]... DONE
+Raw:	4188K c/s real, 4188K c/s virtual
+
+Benchmarking: md5_gen(1002) md5(md5(md5(md5(md5($p))))) [SSE2 16x4x2 (intr)]... DONE
+Raw:	3379K c/s real, 3379K c/s virtual
+
+Benchmarking: md5_gen(1003) md5(md5($p).md5($p)) [64x2 (MD5_Body)]... DONE
+Raw:	1815K c/s real, 1815K c/s virtual
+
+Benchmarking: md5_gen(1004) md5(md5(md5(md5(md5(md5($p)))))) [SSE2 16x4x2 (intr)]... DONE
+Raw:	2847K c/s real, 2847K c/s virtual
+
+Benchmarking: md5_gen(1005) md5(md5(md5(md5(md5(md5(md5($p))))))) [SSE2 16x4x2 (intr)]... DONE
+Raw:	2454K c/s real, 2454K c/s virtual
+
+Benchmarking: md5_gen(1006) md5(md5(md5(md5(md5(md5(md5(md5($p)))))))) [SSE2 16x4x2 (intr)]... DONE
+Raw:	2153K c/s real, 2153K c/s virtual
+
+Benchmarking: md5_gen(1008) md5($p.$s) [joomla] [SSE2 16x4x2 (intr)]... DONE
+Many salts:	12868K c/s real, 12868K c/s virtual
+Only one salt:	7751K c/s real, 7751K c/s virtual
+
+Benchmarking: generic crypt(3) [?/64]... DONE
+Many salts:	211680 c/s real, 211680 c/s virtual
+Only one salt:	211008 c/s real, 211008 c/s virtual
+
+Benchmarking: ssh [32/64]... DONE
+Many salts:	80928 c/s real, 80928 c/s virtual
+Only one salt:	80736 c/s real, 80736 c/s virtual
+
+Benchmarking: pdf [32/64]... DONE
+Many salts:	12882 c/s real, 12882 c/s virtual
+Only one salt:	20819 c/s real, 20819 c/s virtual
+
+Benchmarking: rar [32/64]... DONE
+Many salts:	29.1 c/s real, 29.4 c/s virtual
+Only one salt:	29.1 c/s real, 29.4 c/s virtual
+
+Benchmarking: dummy [N/A]... DONE
+Raw:	78619K c/s real, 78619K c/s virtual
+

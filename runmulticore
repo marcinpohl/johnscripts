@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-set +e
+set -e
 declare -r BASEDIR=~marcin/hashes/crackall.git
 declare -r DICTS=/mnt/storage/dicts
 declare -r JTR=~/john
@@ -9,13 +9,13 @@ declare -r SESSIONSDIR=$BASEDIR/sessions
 declare -r POTSDIR=$BASEDIR/pots
 
 function makedictlists() {
-#find $DICTS/Really_Quick -type f -print0 > $DICTS/list1
-#find $DICTS/Quick_Lists -type f -print0 > $DICTS/list2
-#find $DICTS/wordlists -type f -print0 > $DICTS/list3
-#find $DICTS/Alt_Lang -type f -print0 > $DICTS/list4
-#find $DICTS/Large_Lists -maxdepth 1 -type f -print0 > $DICTS/list5
+find $DICTS/Really_Quick -type f -print0 > $DICTS/list
+find $DICTS/Quick_Lists -type f -print0 >> $DICTS/list
+find $DICTS/Insidepro -type f -print0 >> $DICTS/list
+find $DICTS/Alt_Lang -type f -print0 >> $DICTS/list
+find $DICTS/Large_Lists -maxdepth 1 -type f -print0 >> $DICTS/list
 #find $DICTS/Large_Lists -type f -print0 > $DICTS/list6
-find $DICTS -type f -print0 > $DICTS/list
+#find $DICTS -type f -print0 > $DICTS/list
 }
 
 function onedict_singlerules {
@@ -40,34 +40,52 @@ $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --p
 }
 
 function alldicts_rulessingle() {
-local PASSWD=${@:2}
+declare -a PASSWD=${@:2} 
+declare -a PASSLIST=( )
 local FORMAT=$1
+local PASSWDID=$(echo ${PASSWD[@]} | tr ' ' '_')
+for i in $PASSWD ; do
+	PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
+done
 
 makedictlists #initialize the dictionary lists
-cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules:single --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules:single --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT ${PASSLIST[@]}
 }
 
 function alldicts_rulesstock() {
-local PASSWD=${@:2}
+declare -a PASSWD=${@:2} 
+declare -a PASSLIST=( )
 local FORMAT=$1
+local PASSWDID=$(echo ${PASSWD[@]} | tr ' ' '_')
+for i in $PASSWD ; do
+	PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
+done
 
 makedictlists #initialize the dictionary lists
-cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT ${PASSLIST[@]}
 }
 
 function alldicts_rulesnone() {
-local PASSWD=${@:2}
+declare -a PASSWD=${@:2} 
+declare -a PASSLIST=( )
 local FORMAT=$1
-
+local PASSWDID=$(echo ${PASSWD[@]} | tr ' ' '_')
+for i in $PASSWD ; do
+	PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
+done
+#echo ${PASSLIST[@]}  #print the entire array
 makedictlists #initialize the dictionary lists
-cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWD}.\$\$ --pot=${POTSDIR}/${PASSWD}.pot --format=$FORMAT $PASSWORDDIR/$PASSWD
+#cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT --subformat=27 ${PASSLIST[@]}
+cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot ${PASSLIST[@]}
+#     $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --pot=$POTSDIR/${PASSWDID}.pot  --format=$FORMAT  ${PASSLIST[@]}
 }
 
 ### TESTED
 #onedict_singlerules des Really_Quick/lulz.dic HYPELIST-Uncracked.txt
 #onedict_rulessingle_multipass raw-md5 Really_Quick/marcin.dic ~marcin/hashes/crackall.git/passwords/pastie{4,7,8,9,10}
-#onedict_rulessingle_multipass raw-md5 Really_Quick/lulz.dic pastie{4,7,8,9,10} HYPELIST-Uncracked.txt
+#onedict_rulessingle_multipass raw-md5 Really_Quick/lulz.dic paste1*
 #alldicts_rulesnone raw-md5 HYPELIST-Uncracked.txt
-#alldicts_rulesstock raw-md5 HYPELIST-Uncracked.txt
-alldicts_rulessingle md5 HYPELIST-Uncracked.txt
-#alldicts_rulesnone mysql HYPELIST-Uncracked.txt
+#alldicts_rulesstock raw-md5 paste1{1,5}
+#alldicts_rulessingle md5 MD5_6.passwd
+#alldicts_rulesnone raw-md5 paste1{1,5}
+alldicts_rulessingle raw-md5 20110627_1.txt
