@@ -70,13 +70,58 @@ do
 done
 
 echo "*** particular masks ***"
-PATTERN001=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{1}]" $INPUTFILE )
-PATTERN002=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{2}]" $INPUTFILE )
-PATTERN003=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{3}]" $INPUTFILE )
-PATTERN004=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{4}]" $INPUTFILE )
-PATTERN005=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{5}]" $INPUTFILE )
+PATTERN001=$( $EGREP -xc "[[:lower:]]+[[:punct:]][[:digit:]]{1}]" $INPUTFILE )
+#echo $PATTERN001
+PATTERN002=$( $EGREP -xc "[[:lower:]]+[[:punct:]][[:digit:]]{2}]" $INPUTFILE )
+PATTERN003=$( $EGREP -xc "[[:lower:]]+[[:punct:]][[:digit:]]{3}]" $INPUTFILE )
+PATTERN004=$( $EGREP -xc "[[:lower:]]+[[:punct:]][[:digit:]]{4}]" $INPUTFILE )
+PATTERN005=$( $EGREP -xc "[[:lower:]]+[[:punct:]][[:digit:]]{5}]" $INPUTFILE )
+PATTERN006=$( $EGREP -xc "[[:upper:]]+[[:punct:]][[:digit:]]{1}]" $INPUTFILE )
+PATTERN007=$( $EGREP -xc "[[:upper:]]+[[:punct:]][[:digit:]]{2}]" $INPUTFILE )
+PATTERN008=$( $EGREP -xc "[[:upper:]]+[[:punct:]][[:digit:]]{3}]" $INPUTFILE )
+PATTERN009=$( $EGREP -xc "[[:upper:]]+[[:punct:]][[:digit:]]{4}]" $INPUTFILE )
+PATTERN010=$( $EGREP -xc "[[:upper:]]+[[:punct:]][[:digit:]]{5}]" $INPUTFILE )
 
-for p in $(seq 1 5)
+#PATTERN005=$( $EGREP -xc "[[:lower:]]{4}[[:digit:]{4}]" $INPUTFILE )
+#PATTERN005=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{5}]" $INPUTFILE )
+#PATTERN005=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{5}]" $INPUTFILE )
+#PATTERN005=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{5}]" $INPUTFILE )
+#PATTERN005=$( $EGREP -xc "[[:lower:]+[:punct:][:digit:]{5}]" $INPUTFILE )
+#for p in $(seq 1 5)
+#do
+#	echo ${PATTERN00$p}
+#done
+
+echo "*** first letter frequency ***"
+for letter in a b c d e f g h i j k l m n o p q r s t u v x y z ; 
 do
-	echo ${PATTERN00$p}
+	echo -n "Frequency of" $letter " :"
+	$EGREP -ci "^$letter.*$" $INPUTFILE
+done
+
+echo "*** first two letters frequency ***"
+for oletter in a b c d e f g h i j k l m n o p q r s t u v x y z ; 
+do
+	for iletter in a b c d e f g h i j k l m n o p q r s t u v x y z ; 
+	do
+		echo -n "Frequency of" ${oletter}${iletter} " :"
+		$EGREP -ci "^[$oletter][$iletter].*$" $INPUTFILE
+	done
+done
+
+echo "*** first digit frequency ***"
+for letter in 0 1 2 3 4 5 6 7 8 9
+do
+	echo -n "Frequency of" $letter " :"
+	$EGREP -c "^[$letter].*" $INPUTFILE
+done
+
+echo "*** first two digits frequency ***"
+for oletter in 0 1 2 3 4 5 6 7 8 9
+do
+	for iletter in 0 1 2 3 4 5 6 7 8 9
+	do
+		echo -n "Frequency of" ${oletter}${iletter} " :"
+		$EGREP -c "^[$oletter][$iletter].*" $INPUTFILE
+	done
 done
