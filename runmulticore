@@ -18,6 +18,11 @@ find $DICTS/Large_Lists -maxdepth 1 -type f -print0 >> $DICTS/list
 #find $DICTS -type f -print0 > $DICTS/list
 }
 
+function makequickdictlists() {
+find $DICTS/Really_Quick -type f -print0 > $DICTS/list
+find $DICTS/Quick_Lists -type f -print0 >> $DICTS/list
+}
+
 function onedict_singlerules {
 local PASSWD=$3
 local DICT=$2
@@ -35,8 +40,8 @@ local PASSWDID=$(echo ${PASSWD[@]} | tr ' ' '_')
 for i in $PASSWD ; do
 	PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
 done
-#echo ${PASSLIST[@]}  #print the entire array
-$JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --pot=$POTSDIR/${PASSWDID}.pot  --format=$FORMAT  ${PASSLIST[@]}
+echo ${PASSLIST[@]}  #print the entire array
+#echo $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --pot=$POTSDIR/${PASSWDID}.pot  --format=$FORMAT  ${PASSLIST[@]}
 }
 
 function alldicts_rulessingle() {
@@ -50,6 +55,22 @@ done
 
 makedictlists #initialize the dictionary lists
 cat $DICTS/list | parallel -v -0 $JTR -w:{} --rules:single --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT ${PASSLIST[@]}
+}
+
+function quickdicts_rulessingle() {
+declare -a PASSWD=${@:2} 
+declare -a PASSLIST=( )
+local FORMAT=$1
+local PASSWDID=$(echo ${PASSWD[@]} | tr ' ' '_')
+for i in $PASSWD ; do
+	#PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
+	PASSLIST=( ${PASSLIST[@]-} $(echo $PASSWORDDIR/)$(echo $i) )
+	#echo ${PASSLIST[@]}  #print the entire array
+done
+
+makequickdictlists #initialize the dictionary lists
+cat $DICTS/list | parallel -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT ${PASSLIST[@]}
+#cat $DICTS/list | parallel -v -0 $JTR -w:{} -rules --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT ${PASSLIST[@]}
 }
 
 function alldicts_rulesstock() {
@@ -75,6 +96,8 @@ for i in $PASSWD ; do
 done
 #echo ${PASSLIST[@]}  #print the entire array
 makedictlists #initialize the dictionary lists
+makequickdictlists #initialize the quick lists
+
 #cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot --format=$FORMAT --subformat=27 ${PASSLIST[@]}
 cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}.\$\$ --pot=${POTSDIR}/${PASSWDID}.pot ${PASSLIST[@]}
 #     $JTR -w:$DICTS/"${DICT}" --rules:single --session=$SESSIONSDIR/$PASSWDID.$$  --pot=$POTSDIR/${PASSWDID}.pot  --format=$FORMAT  ${PASSLIST[@]}
@@ -82,10 +105,32 @@ cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}
 
 ### TESTED
 #onedict_singlerules des Really_Quick/lulz.dic HYPELIST-Uncracked.txt
-#onedict_rulessingle_multipass raw-md5 Really_Quick/marcin.dic ~marcin/hashes/crackall.git/passwords/pastie{4,7,8,9,10}
+#onedict_rulessingle_multipass raw-md5 Quick_Lists/foundthese2.dic ~marcin/hashes/crackall.git/passwords/past*
 #onedict_rulessingle_multipass raw-md5 Really_Quick/lulz.dic paste1*
 #alldicts_rulesnone raw-md5 HYPELIST-Uncracked.txt
 #alldicts_rulesstock raw-md5 paste1{1,5}
 #alldicts_rulessingle md5 MD5_6.passwd
 #alldicts_rulesnone raw-md5 paste1{1,5}
-alldicts_rulessingle raw-md5 20110627_1.txt
+#alldicts_rulessingle raw-md5 20110627_1.txt
+#alldicts_rulessingle lm paste20.clean
+#alldicts_rulessingle raw-md5 paste21.clean
+#alldicts_rulessingle raw-md5 paste22.clean
+#alldicts_rulessingle des paste19
+#alldicts_rulessingle lm paste18
+#alldicts_rulessingle lm paste17
+#alldicts_rulessingle des paste16
+
+#alldicts_rulessingle raw-sha1 bamra_BIG2
+#alldicts_rulesstock raw-sha1 bamra_BIG2
+#alldicts_rulessingle raw-sha1 paste23
+
+#alldicts_rulessingle lm paste25
+#alldicts_rulessingle raw-md5 paste25
+#alldicts_rulessingle raw-sha1 paste25
+
+#quickdicts_rulessingle md5 HYPELIST-Uncracked.txt
+#quickdicts_rulessingle md5 *.txt
+#alldicts_rulessingle raw-md5 pastie*
+#alldicts_rulessingle raw-md5 paste28
+alldicts_rulessingle raw-md5 paste32
+

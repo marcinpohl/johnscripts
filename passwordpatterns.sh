@@ -116,12 +116,14 @@ do
 	$EGREP -c "^[$letter].*" $INPUTFILE
 done
 
-echo "*** first two digits frequency ***"
-for oletter in 0 1 2 3 4 5 6 7 8 9
-do
-	for iletter in 0 1 2 3 4 5 6 7 8 9
-	do
-		echo -n "Frequency of" ${oletter}${iletter} " :"
-		$EGREP -c "^[$oletter][$iletter].*" $INPUTFILE
-	done
-done
+#echo "*** first two digits frequency ***"
+#declare -A TWODIGITFREQ
+#for oletter in 0 1 2 3 4 5 6 7 8 9
+#do
+#	for iletter in 0 1 2 3 4 5 6 7 8 9
+#	do
+#		DIGRAPH="${oletter}${iletter}"
+#		echo "Frequency of" $DIGRAPH " :"
+#		TWODIGITFREQ[$DIGRAPH]=$( $EGREP -c "^[$oletter][$iletter].*" $INPUTFILE )
+#	done
+##done
