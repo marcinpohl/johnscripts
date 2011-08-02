@@ -2,18 +2,20 @@
 set -x
 set -e
 declare -r BASEDIR=~marcin/hashes/crackall.git
-declare -r DICTS=/mnt/storage/dicts
-declare -r JTR=~/john
+declare -r DICTS=/data/dicts
+declare -r JTR=$BASEDIR/john-1.7.8-jumbo-4/run/john
 declare -r PASSWORDDIR=$BASEDIR/passwords
 declare -r SESSIONSDIR=$BASEDIR/sessions
 declare -r POTSDIR=$BASEDIR/pots
 
 function makedictlists() {
-find $DICTS/Really_Quick -type f -print0 > $DICTS/list
-find $DICTS/Quick_Lists -type f -print0 >> $DICTS/list
-find $DICTS/Insidepro -type f -print0 >> $DICTS/list
-find $DICTS/Alt_Lang -type f -print0 >> $DICTS/list
-find $DICTS/Large_Lists -maxdepth 1 -type f -print0 >> $DICTS/list
+#find $DICTS/Really_Quick -type f -print0 > $DICTS/list
+#find $DICTS/Quick_Lists -type f -print0 >> $DICTS/list
+#find $DICTS/Insidepro -type f -print0 >> $DICTS/list
+#find $DICTS/Alt_Lang -type f -print0 >> $DICTS/list
+#find $DICTS/Large_Lists -maxdepth 1 -type f -print0 >> $DICTS/list
+find $DICTS/wordlists -maxdepth 1 -type f -print0 > $DICTS/list
+find $DICTS/InsideproHuge -maxdepth 1 -type f -print0 >> $DICTS/list
 #find $DICTS/Large_Lists -type f -print0 > $DICTS/list6
 #find $DICTS -type f -print0 > $DICTS/list
 }
@@ -132,5 +134,9 @@ cat $DICTS/list | parallel -v -0 $JTR -w:{} --session=${SESSIONSDIR}/${PASSWDID}
 #quickdicts_rulessingle md5 *.txt
 #alldicts_rulessingle raw-md5 pastie*
 #alldicts_rulessingle raw-md5 paste28
-alldicts_rulessingle raw-md5 paste32
+#alldicts_rulessingle raw-md5 paste32
+#alldicts_rulessingle raw-md5 paste3*
+#alldicts_rulessingle raw-md5 paste4*
+#alldicts_rulessingle raw-md5 paste5*
+alldicts_rulessingle raw-md5 paste6{6,8}.rawmd5 paste75.txt
 
